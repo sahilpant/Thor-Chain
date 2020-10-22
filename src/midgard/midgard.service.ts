@@ -57,15 +57,27 @@ export class MidgardService {
         }
     }
 
+    async getPools():Promise<any>{
+        const baseURL = await this.getBaseURL();
+
+        try {
+            const pool = await axios(`${baseURL}/v1/pools`)
+            return pool.data;
+        } catch (error) {
+            throw new BadRequestException('No Pools found');
+        }
+    }
+
+
     async getPoolsDetails(data:midgardPoolDto):Promise<any>{
         const baseURL = await this.getBaseURL();
 
         try {
-            const pool = await axios(`${baseURL}/v1/pools/details`,{params:{
+            const pool = await axios(`${baseURL}/v1/pools/detail`,{params:{
                 'view': data.view,
                 'asset': data.asset
             }})
-            return pool
+            return pool.data
         } catch (error) {
             
             throw new BadRequestException('Pool deatils not found');

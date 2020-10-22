@@ -20,7 +20,12 @@ export class MidgardController {
         return this.midgardService.getAssetInfo(data);
     }
 
-    @Get('pool')
+    @Get('pools')
+    getpools():Promise<any>{
+        return this.midgardService.getPools();
+    }
+
+    @Get('pooldetails')
     getPoolsDetails(@Query() data:midgardPoolDto):Promise<any>{
         return this.midgardService.getPoolsDetails(data);
     }

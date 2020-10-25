@@ -4,6 +4,7 @@ import midgard from '@thorchain/asgardex-midgard';
 import axios from 'axios';
 import { midgardPoolDto } from 'src/Midgard.dtos/midgar.pooldetails.dto';
 import { stakerPoolDataDTO } from 'src/Midgard.dtos/midgard.stakerPoolData.dto';
+import { History } from 'src/Midgard.dtos/midgard.history.dto';
 
 @Injectable()
 export class MidgardService {
@@ -107,6 +108,7 @@ export class MidgardService {
             throw new BadRequestException(`staker data not found`);
         }
     }
+
     async getStakerPoolData(data:stakerPoolDataDTO):Promise<any>{
         const baseURL = await this.getBaseURL();
 
@@ -117,6 +119,27 @@ export class MidgardService {
             return stakerdata.data;
         } catch (error) {
             throw new BadRequestException(`staker data not found`);
+        }
+    }
+
+    async getHistory(data: History): Promise<any> {
+        const baseURL = await this.getBaseURL();
+
+        console.log(new Date(data.from).getTime());
+
+        try {
+            const history = await axios(`${baseURL}/v1/history/pools`, {
+                params: {
+                    "pool": data.pool,
+                    "interval": data.interval,
+                    "from": new Date(data.from).getTime(),
+                    "to": Date.now()
+                }
+            })
+            return history.data;
+        }
+        catch (err) {
+            throw new BadRequestException("history not found");
         }
     }
 

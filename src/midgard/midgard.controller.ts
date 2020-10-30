@@ -15,57 +15,64 @@ export class MidgardController {
     @Get('txn')
     @ApiOkResponse()
     @ApiBadRequestResponse()
-    gettxn(@Query() data:midgardTxnDto):Promise<any>{
+    gettxn(@Query() data:midgardTxnDto):Promise<string>{
         return this.midgardService.gettxn(data);
     }
 
     @Get('asset')
     @ApiOkResponse()
     @ApiBadRequestResponse()
-    getAssetInfo(@Query('asset') data:string):Promise<any>{
+    getAssetInfo(@Query('asset') data:string):Promise<string>{
         return this.midgardService.getAssetInfo(data);
     }
 
     @Get('pools')
     @ApiOkResponse()
     @ApiBadRequestResponse()
-    getpools():Promise<any>{
+    getpools():Promise<string>{
         return this.midgardService.getPools();
     }
 
     @Get('pooldetails')
     @ApiOkResponse()
     @ApiBadRequestResponse()
-    getPoolsDetails(@Query() data:midgardPoolDto):Promise<any>{
+    getPoolsDetails(@Query() data:midgardPoolDto):Promise<string>{
         return this.midgardService.getPoolsDetails(data);
     }
 
     @Get('stakers')
     @ApiOkResponse()
     @ApiBadRequestResponse()
-    getStakers():Promise<any>{
+    getStakers():Promise<string>{
         return this.midgardService.getStakers();
     }
 
     @Get('stakerdata')
     @ApiOkResponse()
     @ApiBadRequestResponse()
-    getStakerData(@Query('address') data:string):Promise<any>{
+    getStakerData(@Query('address') data:string):Promise<string>{
         return this.midgardService.getStakerData(data);
     }
 
     @Get('stakerpooldata')
     @ApiOkResponse()
     @ApiBadRequestResponse()
-    getStakerPoolData(@Query() data:stakerPoolDataDTO):Promise<any>{
+    getStakerPoolData(@Query() data:stakerPoolDataDTO):Promise<string>{
         return this.midgardService.getStakerPoolData(data);
     }
 
     @Get('history')
     @ApiOkResponse()
     @ApiBadRequestResponse()
-    getHistory(@Query() data: History): Promise<any> {
+    getHistory(@Query() data: History): Promise<string> {
         return this.midgardService.getHistory(data);
+    }
+
+    @Get('earning')
+    @ApiOkResponse()
+    @ApiBadRequestResponse()
+    getPoolEarningDetails(@Query('data') data:string):Promise<string>{
+        return this.midgardService.getPoolEarningDetails(data)
     }
 
 }

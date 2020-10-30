@@ -15,7 +15,7 @@ export class MidgardService {
     async getBaseURL():Promise<string>{
         try {
             
-            const baseURL = await midgard('chaosnet',true);
+            const baseURL = await midgard('chaosnet',false);
             this.logger.log(baseURL);
             return baseURL;
             
@@ -25,7 +25,7 @@ export class MidgardService {
 
     }
 
-    async gettxn(data:midgardTxnDto):Promise<any>{
+    async gettxn(data:midgardTxnDto):Promise<string>{
 
             
         const baseURL = await this.getBaseURL();
@@ -43,7 +43,7 @@ export class MidgardService {
             throw new BadRequestException('Error in axios request');
         }
     }
-    async getAssetInfo(data:string):Promise<any>{
+    async getAssetInfo(data:string):Promise<string>{
         const baseURL = await this.getBaseURL();
         const asset = await axios.get(`${baseURL}/v1/assets`,{params:
             {
@@ -58,7 +58,7 @@ export class MidgardService {
         }
     }
 
-    async getPools():Promise<any>{
+    async getPools():Promise<string>{
         const baseURL = await this.getBaseURL();
 
         try {
@@ -70,7 +70,7 @@ export class MidgardService {
     }
 
 
-    async getPoolsDetails(data:midgardPoolDto):Promise<any>{
+    async getPoolsDetails(data:midgardPoolDto):Promise<string>{
         const baseURL = await this.getBaseURL();
 
         try {
@@ -87,7 +87,7 @@ export class MidgardService {
 
     }
 
-    async getStakers():Promise<any>{
+    async getStakers():Promise<string>{
         const baseURL = await this.getBaseURL();
 
         try{
@@ -98,7 +98,7 @@ export class MidgardService {
         }
     }
 
-    async getStakerData(data:string):Promise<any>{
+    async getStakerData(data:string):Promise<string>{
         const baseURL = await this.getBaseURL();
 
         try {
@@ -109,7 +109,7 @@ export class MidgardService {
         }
     }
 
-    async getStakerPoolData(data:stakerPoolDataDTO):Promise<any>{
+    async getStakerPoolData(data:stakerPoolDataDTO):Promise<string>{
         const baseURL = await this.getBaseURL();
 
         try {
@@ -122,7 +122,7 @@ export class MidgardService {
         }
     }
 
-    async getHistory(data: History): Promise<any> {
+    async getHistory(data: History): Promise<string> {
         const baseURL = await this.getBaseURL();
 
         console.log(new Date(data.from).getTime());
@@ -140,6 +140,17 @@ export class MidgardService {
         }
         catch (err) {
             throw new BadRequestException("history not found");
+        }
+    }
+
+    async getPoolEarningDetails(data:string):Promise<string>{
+        const baseURL = await this.getBaseURL();
+        try {
+            const earning = await axios(`${baseURL}/v1/pools/details/${data}/earning`)
+            return earning.data;
+        }
+        catch{
+            throw new BadRequestException('earning not found');
         }
     }
 
